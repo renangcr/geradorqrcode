@@ -1,33 +1,33 @@
-const Container = document.querySelector('.container');
-const qrCodeBtn = document.querySelector('#qr-form button');
-const qrCodeInput = document.querySelector('#qr-form input');
-const qrCodeImage = document.querySelector('#qr-code img');
+const btnQrCode = document.querySelector('#qr-form button');
+const inputQrCode = document.querySelector('#qr-form input');
+const imageQrCode = document.querySelector('#qr-code img');
+const container = document.querySelector('.container');
 
-// FUNCOES
-async function generateQrCode(){
-    const qrCodeInputValue  = qrCodeInput.value.trim();
+// Funcoes
+function gerarQrCode(){
+    const valorInput = inputQrCode.value.trim();
 
-    if(!qrCodeInputValue) return;
-    qrCodeBtn.innerHTML = 'Gerando QR Code...';
+    if(!valorInput) return;
 
-    qrCodeImage.src = await `https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${qrCodeInputValue}`;
+    btnQrCode.innerHTML = 'Gerando Qr Code...';
 
-    qrCodeImage.addEventListener('load', () => {
-        Container.classList.add('active');
-        qrCodeBtn.innerHTML = 'Gerar QR Code';
-        qrCodeInput.value = '';
-    })
+    imageQrCode.src = `https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${valorInput}`;
+
+    imageQrCode.addEventListener('load', () => {
+        container.classList.add('active');
+        btnQrCode.innerHTML = 'Gerar outro QR Code ';
+        inputQrCode.value = '';
+    });
 
 
 }
 
-// EVENTOS
-qrCodeBtn.addEventListener('click', () => {
-    generateQrCode();
-});
-
-qrCodeInput.addEventListener('keydown', (e) => {
+// Eventos
+btnQrCode.addEventListener('click', () => {
+    gerarQrCode();
+})
+inputQrCode.addEventListener('keyup', (e) => {
     if(e.code === 'Enter'){
-        generateQrCode();
+        gerarQrCode();
     }
 })
